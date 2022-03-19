@@ -6,7 +6,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { Theme } from './src/constants';
 import DeckListScreen from './src/screens/DeckListScreen';
 
-export default function App() {
+const App = () => {
   return (
     <PaperProvider theme={Theme}>
       <SafeAreaProvider>
@@ -16,3 +16,5 @@ export default function App() {
     </PaperProvider>
   );
 }
+
+export default App;
