@@ -29,7 +29,7 @@ const RootNavigator = () => {
       <Stack.Screen
         name="DeckListScreen"
         component={DeckListScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, title: 'Decks' }}
       />
       <Stack.Screen name="NotFoundScreen" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
