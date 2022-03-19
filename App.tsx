@@ -4,13 +4,13 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as PaperProvider } from 'react-native-paper';
 
 import { Theme } from './src/constants';
-import DeckListScreen from './src/screens/DeckListScreen';
+import Navigation from './src/navigation';
 
 const App = () => {
   return (
     <PaperProvider theme={Theme}>
       <SafeAreaProvider>
-        <DeckListScreen />
+        <Navigation />
         <StatusBar style="auto" />
       </SafeAreaProvider>
     </PaperProvider>
