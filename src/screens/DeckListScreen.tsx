@@ -5,7 +5,7 @@ import { Paragraph, Title } from 'react-native-paper';
 import { RootStackScreenProps } from '../types';
 import { ClickableCard } from '../components';
 
-const decks = [
+export const decks = [
   {
     id: 1,
     name: 'deck 1',
@@ -44,7 +44,15 @@ const DeckListScreen = ({ navigation }: RootStackScreenProps<'DeckListScreen'>) 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {decks.map((deck) => (
-        <ClickableCard key={deck.id} style={styles.card} onPress={() => {}}>
+        <ClickableCard
+          key={deck.id}
+          style={styles.card}
+          onPress={() =>
+            navigation.navigate('DeckScreen', {
+              deckId: deck.id
+            })
+          }
+        >
           <Title>{deck.name}</Title>
           <Paragraph>{Object.keys(deck.cards || {}).length} Card(s)</Paragraph>
         </ClickableCard>

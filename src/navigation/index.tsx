@@ -6,7 +6,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { DeckListScreen, NotFoundScreen } from '../screens';
+import { DeckListScreen, DeckScreen, NotFoundScreen } from '../screens';
 import { RootStackParamList } from '../types';
 
 const Navigation = () => {
@@ -30,6 +30,11 @@ const RootNavigator = () => {
         name="DeckListScreen"
         component={DeckListScreen}
         options={{ headerShown: true, title: 'Decks' }}
+      />
+      <Stack.Screen
+        name="DeckScreen"
+        component={DeckScreen}
+        options={{ headerShown: true, title: '' }}
       />
       <Stack.Screen name="NotFoundScreen" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
