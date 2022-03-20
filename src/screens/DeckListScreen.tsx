@@ -33,7 +33,7 @@ export const decks = [
 ];
 
 const DeckListScreen = ({ navigation }: RootStackScreenProps<'DeckListScreen'>) => {
-  const handleAdd = () => {};
+  const handleAdd = () => navigation.navigate('NewDeckScreen');
 
   useEffect(() => {
     navigation.setOptions({
