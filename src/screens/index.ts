@@ -1,6 +1,7 @@
 import DeckListScreen from './DeckListScreen';
 import DeckScreen from './DeckScreen';
 import NewDeckScreen from './NewDeckScreen';
+import NewCardScreen from './NewCardScreen';
 import NotFoundScreen from './NotFoundScreen';
 
-export { DeckListScreen, DeckScreen, NewDeckScreen, NotFoundScreen };
+export { DeckListScreen, DeckScreen, NewDeckScreen, NewCardScreen, NotFoundScreen };

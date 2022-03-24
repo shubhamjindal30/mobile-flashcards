@@ -15,6 +15,7 @@ export type RootStackParamList = {
   DeckListScreen: undefined;
   DeckScreen: { deckId?: number } | undefined;
   NewDeckScreen: undefined;
+  NewCardScreen: undefined;
   NotFoundScreen: undefined;
 };
 

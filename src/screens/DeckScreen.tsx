@@ -6,7 +6,7 @@ import { Theme } from '../constants';
 import { decks } from './DeckListScreen';
 import { Button } from '../components';
 
-const DeckScreen = ({ route }: RootStackScreenProps<'DeckScreen'>) => {
+const DeckScreen = ({ route, navigation }: RootStackScreenProps<'DeckScreen'>) => {
   const deckId = route?.params?.deckId || null;
 
   const deck = deckId ? decks.find((x) => x.id === deckId) : null;
@@ -18,7 +18,7 @@ const DeckScreen = ({ route }: RootStackScreenProps<'DeckScreen'>) => {
         <Paragraph>{Object.keys(deck?.cards || {}).length} card(s)</Paragraph>
       </View>
       <View style={styles.buttonsView}>
-        <Button mode="contained" onPress={() => {}}>
+        <Button mode="contained" onPress={() => navigation.navigate('NewCardScreen')}>
           Add Card
         </Button>
         <Button
