@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { DecksObj, SetDecksAction } from './types';
+import { DecksObj, SaveDeckAction, SetDeckAction, SetDecksAction } from './types';
 
 interface DeckState {
   decks: DecksObj;
@@ -18,10 +18,18 @@ export const deckSlice = createSlice({
     setDecks: (state, action: SetDecksAction) => ({
       ...state,
       decks: action.payload
-    }) 
+    }),
+    saveDeck: (_state, _action: SaveDeckAction) => {},
+    setDeck: (state, action: SetDeckAction) => ({
+      ...state,
+      decks: {
+        ...state.decks,
+        [action.payload.id]: action.payload
+      }
+    })
   }
 });
 
-export const { getDecks, setDecks } = deckSlice.actions;
+export const { getDecks, setDecks, saveDeck, setDeck } = deckSlice.actions;
 
 export default deckSlice.reducer;

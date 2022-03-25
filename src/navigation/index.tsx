@@ -3,6 +3,7 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
+import { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -14,8 +15,16 @@ import {
   NotFoundScreen
 } from '../screens';
 import { RootStackParamList } from '../types';
+import { useDispatch } from '../store/hooks';
+import { getDecks } from '../store/decks/slice';
 
 const Navigation = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getDecks());
+  }, [dispatch]);
+
   return (
     <NavigationContainer>
       <RootNavigator />

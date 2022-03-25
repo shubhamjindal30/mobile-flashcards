@@ -13,7 +13,7 @@ declare global {
 
 export type RootStackParamList = {
   DeckListScreen: undefined;
-  DeckScreen: { deckId?: number } | undefined;
+  DeckScreen: { deckId?: string } | undefined;
   NewDeckScreen: undefined;
   NewCardScreen: undefined;
   NotFoundScreen: undefined;

@@ -3,36 +3,12 @@ import { ScrollView, StyleSheet, Button as DefaultButton } from 'react-native';
 import { Paragraph, Title } from 'react-native-paper';
 
 import { RootStackScreenProps } from '../types';
+import { useSelector } from '../store/hooks';
 import { ClickableCard } from '../components';
 
-export const decks = [
-  {
-    id: 1,
-    name: 'deck 1',
-    cards: {
-      '1': {},
-      '2': {},
-      '3': {}
-    }
-  },
-  {
-    id: 2,
-    name: 'deck 2',
-    cards: {
-      '1': {},
-      '2': {}
-    }
-  },
-  {
-    id: 3,
-    name: 'deck 3',
-    cards: {
-      '1': {}
-    }
-  }
-];
-
 const DeckListScreen = ({ navigation }: RootStackScreenProps<'DeckListScreen'>) => {
+  const decks = useSelector((state) => state.deck.decks);
+
   const handleAdd = () => navigation.navigate('NewDeckScreen');
 
   useEffect(() => {
@@ -43,7 +19,7 @@ const DeckListScreen = ({ navigation }: RootStackScreenProps<'DeckListScreen'>) 
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {decks.map((deck) => (
+      {Object.values(decks).map((deck) => (
         <ClickableCard
           key={deck.id}
           style={styles.card}
@@ -53,8 +29,8 @@ const DeckListScreen = ({ navigation }: RootStackScreenProps<'DeckListScreen'>) 
             })
           }
         >
-          <Title>{deck.name}</Title>
-          <Paragraph>{Object.keys(deck.cards || {}).length} Card(s)</Paragraph>
+          <Title>{deck.title}</Title>
+          <Paragraph>{deck.questions.length} Card(s)</Paragraph>
         </ClickableCard>
       ))}
     </ScrollView>

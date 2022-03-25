@@ -3,19 +3,20 @@ import { Paragraph, Title } from 'react-native-paper';
 
 import { RootStackScreenProps } from '../types';
 import { Theme } from '../constants';
-import { decks } from './DeckListScreen';
+import { useSelector } from '../store/hooks';
 import { Button } from '../components';
 
 const DeckScreen = ({ route, navigation }: RootStackScreenProps<'DeckScreen'>) => {
   const deckId = route?.params?.deckId || null;
+  const decks = useSelector((state) => state.deck.decks);
 
-  const deck = deckId ? decks.find((x) => x.id === deckId) : null;
+  const deck = deckId ? decks[deckId] : null;
 
   return (
     <View style={styles.container}>
       <View style={styles.headingView}>
-        <Title style={styles.title}>{deck?.name}</Title>
-        <Paragraph>{Object.keys(deck?.cards || {}).length} card(s)</Paragraph>
+        <Title style={styles.title}>{deck?.title}</Title>
+        <Paragraph>{deck?.questions.length} card(s)</Paragraph>
       </View>
       <View style={styles.buttonsView}>
         <Button mode="contained" onPress={() => navigation.navigate('NewCardScreen')}>
