@@ -7,6 +7,7 @@ declare global {
       secondaryDark: string;
       white: string;
       black: string;
+      success: string;
     }
   }
 }
@@ -22,5 +23,6 @@ export default {
     darkGrey: '#444',
     white: '#ffffff',
     black: '#000000',
+    success: '#007500'
   }
 };
