@@ -2,13 +2,23 @@ import { useState } from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
+import { RootStackScreenProps } from '../types';
+import { useDispatch } from '../store/hooks';
+import { saveQuestion } from '../store/decks/slice';
 import { Button } from '../components';
 
-const NewCardScreen = () => {
-  const [question, setQuestion] = useState('');
-  const [password, setPassword] = useState('');
+const NewCardScreen = ({ route, navigation }: RootStackScreenProps<'NewCardScreen'>) => {
+  const deckId = route?.params?.deckId || null;
+  const dispatch = useDispatch();
 
-  const handleSubmit = () => {};
+  const [question, setQuestion] = useState('');
+  const [answer, setAnswer] = useState('');
+
+  const handleSubmit = () => {
+    if (!deckId) return;
+    dispatch(saveQuestion({ deckId, question: { question, answer } }));
+    navigation.goBack();
+  };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -26,8 +36,8 @@ const NewCardScreen = () => {
             mode="outlined"
             placeholder="Answer"
             label="Answer"
-            value={password}
-            onChangeText={setPassword}
+            value={answer}
+            onChangeText={setAnswer}
           />
         </View>
         <View style={styles.buttonView}>

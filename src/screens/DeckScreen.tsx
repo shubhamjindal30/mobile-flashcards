@@ -19,7 +19,10 @@ const DeckScreen = ({ route, navigation }: RootStackScreenProps<'DeckScreen'>) =
         <Paragraph>{deck?.questions.length} card(s)</Paragraph>
       </View>
       <View style={styles.buttonsView}>
-        <Button mode="contained" onPress={() => navigation.navigate('NewCardScreen')}>
+        <Button
+          mode="contained"
+          onPress={() => navigation.navigate('NewCardScreen', { deckId: deck?.id })}
+        >
           Add Card
         </Button>
         <Button

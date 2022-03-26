@@ -1,9 +1,9 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-
-import { Deck, DecksObj, SaveDeckAction } from './types';
-import { getDecks, saveDeck, setDeck, setDecks } from './slice';
-import { getDecksFromStorage, saveDeckInStorage } from './services';
 import { Alert } from 'react-native';
+
+import { Deck, DecksObj, SaveDeckAction, SaveQuestionAction } from './types';
+import { getDecks, saveDeck, saveQuestion, setDeck, setDecks, setQuestion } from './slice';
+import { getDecksFromStorage, saveDeckInStorage, saveQuestionInStorage } from './services';
 
 function* handleGetDecks() {
   try {
@@ -28,6 +28,22 @@ function* handleSaveDeck(action: SaveDeckAction) {
   }
 }
 
+function* handleSaveQuestion(action: SaveQuestionAction) {
+  try {
+    const response: boolean = yield call(saveQuestionInStorage, action.payload);
+    if (response) {
+      yield put(setQuestion(action.payload));
+    }
+  } catch (error) {
+    console.log(`Error in handleSaveQuestion: ${error}`);
+    Alert.alert('Error', 'There was an error in saving card!');
+  }
+}
+
 export function* watchDeckRequests() {
-  yield all([takeLatest(getDecks.type, handleGetDecks), takeLatest(saveDeck.type, handleSaveDeck)]);
+  yield all([
+    takeLatest(getDecks.type, handleGetDecks),
+    takeLatest(saveDeck.type, handleSaveDeck),
+    takeLatest(saveQuestion.type, handleSaveQuestion)
+  ]);
 }

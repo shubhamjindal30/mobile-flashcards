@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { Deck, DecksObj } from './types';
+import { Deck, DecksObj, SaveQuestionPayload } from './types';
 
 const getDecksFromStorage = async () => {
   try {
@@ -31,4 +31,21 @@ const saveDeckInStorage = async (title: string) => {
   }
 };
 
-export { getDecksFromStorage, saveDeckInStorage };
+const saveQuestionInStorage = async (payload: SaveQuestionPayload) => {
+  try {
+    const decksString = await AsyncStorage.getItem('decks');
+    const decks: DecksObj = decksString ? JSON.parse(decksString) : {};
+    const deck = decks[payload.deckId];
+    if (deck) {
+      deck.questions.push(payload.question);
+      decks[deck.id] = deck;
+      await AsyncStorage.setItem('decks', JSON.stringify(decks));
+      return true;
+    } else return false;
+  } catch (error) {
+    console.log(`Error in saveQuestionInStorage`);
+    return false;
+  }
+};
+
+export { getDecksFromStorage, saveDeckInStorage, saveQuestionInStorage };
