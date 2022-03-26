@@ -12,6 +12,9 @@ const DeckScreen = ({ route, navigation }: RootStackScreenProps<'DeckScreen'>) =
 
   const deck = deckId ? decks[deckId] : null;
 
+  const handleAddCard = () => navigation.navigate('NewCardScreen', { deckId: deck?.id });
+  const handleStartQuiz = () => navigation.navigate('QuizScreen', { deckId: deck?.id });
+
   return (
     <View style={styles.container}>
       <View style={styles.headingView}>
@@ -19,17 +22,14 @@ const DeckScreen = ({ route, navigation }: RootStackScreenProps<'DeckScreen'>) =
         <Paragraph>{deck?.questions.length} card(s)</Paragraph>
       </View>
       <View style={styles.buttonsView}>
-        <Button
-          mode="contained"
-          onPress={() => navigation.navigate('NewCardScreen', { deckId: deck?.id })}
-        >
+        <Button mode="contained" onPress={handleAddCard}>
           Add Card
         </Button>
         <Button
           style={styles.marginTop}
           mode="contained"
           color={Theme.colors.backdrop}
-          onPress={() => {}}
+          onPress={handleStartQuiz}
         >
           Start Quiz
         </Button>

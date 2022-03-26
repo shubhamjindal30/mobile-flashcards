@@ -12,6 +12,7 @@ import {
   DeckScreen,
   NewCardScreen,
   NewDeckScreen,
+  QuizScreen,
   NotFoundScreen
 } from '../screens';
 import { RootStackParamList } from '../types';
@@ -60,6 +61,11 @@ const RootNavigator = () => {
         name="NewCardScreen"
         component={NewCardScreen}
         options={{ headerShown: true, title: 'Add Card' }}
+      />
+      <Stack.Screen
+        name="QuizScreen"
+        component={QuizScreen}
+        options={{ headerShown: true, title: 'Quiz' }}
       />
       <Stack.Screen name="NotFoundScreen" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
