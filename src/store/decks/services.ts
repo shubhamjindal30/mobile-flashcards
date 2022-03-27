@@ -48,4 +48,20 @@ const saveQuestionInStorage = async (payload: SaveQuestionPayload) => {
   }
 };
 
-export { getDecksFromStorage, saveDeckInStorage, saveQuestionInStorage };
+const deleteDeckFromStorage = async (deckId: string) => {
+  try {
+    const decksString = await AsyncStorage.getItem('decks');
+    const decks: DecksObj = decksString ? JSON.parse(decksString) : {};
+    const deck = decks[deckId];
+    if (deck) {
+      delete decks[deck.id];
+      await AsyncStorage.setItem('decks', JSON.stringify(decks));
+      return true;
+    } else return false;
+  } catch (error) {
+    console.log(`Error in deleteDeckFromStorage`);
+    return false;
+  }
+};
+
+export { getDecksFromStorage, saveDeckInStorage, saveQuestionInStorage, deleteDeckFromStorage };

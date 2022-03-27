@@ -1,9 +1,23 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { Alert } from 'react-native';
 
-import { Deck, DecksObj, SaveDeckAction, SaveQuestionAction } from './types';
-import { getDecks, saveDeck, saveQuestion, setDeck, setDecks, setQuestion } from './slice';
-import { getDecksFromStorage, saveDeckInStorage, saveQuestionInStorage } from './services';
+import { Deck, DecksObj, DeleteDeckAction, SaveDeckAction, SaveQuestionAction } from './types';
+import {
+  deleteDeck,
+  deleteDeckFromStore,
+  getDecks,
+  saveDeck,
+  saveQuestion,
+  setDeck,
+  setDecks,
+  setQuestion
+} from './slice';
+import {
+  deleteDeckFromStorage,
+  getDecksFromStorage,
+  saveDeckInStorage,
+  saveQuestionInStorage
+} from './services';
 
 function* handleGetDecks() {
   try {
@@ -40,10 +54,23 @@ function* handleSaveQuestion(action: SaveQuestionAction) {
   }
 }
 
+function* handleDeleteDeck(action: DeleteDeckAction) {
+  try {
+    const response: boolean = yield call(deleteDeckFromStorage, action.payload);
+    if (response) {
+      yield put(deleteDeckFromStore(action.payload));
+    }
+  } catch (error) {
+    console.log(`Error in handleDeleteDeck: ${error}`);
+    Alert.alert('Error', 'There was an error in deleting deck!');
+  }
+}
+
 export function* watchDeckRequests() {
   yield all([
     takeLatest(getDecks.type, handleGetDecks),
     takeLatest(saveDeck.type, handleSaveDeck),
-    takeLatest(saveQuestion.type, handleSaveQuestion)
+    takeLatest(saveQuestion.type, handleSaveQuestion),
+    takeLatest(deleteDeck.type, handleDeleteDeck)
   ]);
 }

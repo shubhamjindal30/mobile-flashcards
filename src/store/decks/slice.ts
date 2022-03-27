@@ -3,6 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   Deck,
   DecksObj,
+  DeleteDeckAction,
+  DeleteDeckFromStoreAction,
   SaveDeckAction,
   SaveQuestionAction,
   SetDeckAction,
@@ -37,6 +39,11 @@ export const deckSlice = createSlice({
         deck.questions.push(action.payload.question);
         state.decks[deck.id] = deck;
       }
+    },
+    deleteDeck: (_state, _action: DeleteDeckAction) => {},
+    deleteDeckFromStore: (state, action: DeleteDeckFromStoreAction) => {
+      const deck: Deck | undefined = state.decks && state.decks[action.payload];
+      if (deck) delete state.decks[deck.id];
     }
   }
 });
@@ -47,7 +54,9 @@ export const {
   saveDeck,
   setDeck,
   saveQuestion,
-  setQuestion
+  setQuestion,
+  deleteDeck,
+  deleteDeckFromStore
 } = deckSlice.actions;
 
 export default deckSlice.reducer;

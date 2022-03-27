@@ -3,17 +3,25 @@ import { Paragraph, Title } from 'react-native-paper';
 
 import { RootStackScreenProps } from '../types';
 import { Theme } from '../constants';
-import { useSelector } from '../store/hooks';
-import { Button } from '../components';
+import { useDispatch, useSelector } from '../store/hooks';
+import { deleteDeck } from '../store/decks/slice';
+import { Button, ShowMessage } from '../components';
 
 const DeckScreen = ({ route, navigation }: RootStackScreenProps<'DeckScreen'>) => {
   const deckId = route?.params?.deckId || null;
+  const dispatch = useDispatch();
   const decks = useSelector((state) => state.deck.decks);
 
   const deck = deckId ? decks[deckId] : null;
 
-  const handleAddCard = () => navigation.navigate('NewCardScreen', { deckId: deck?.id });
-  const handleStartQuiz = () => navigation.navigate('QuizScreen', { deckId: deck?.id });
+  if (!deck) return <ShowMessage>Deck not found!</ShowMessage>;
+
+  const handleAddCard = () => navigation.navigate('NewCardScreen', { deckId: deck.id });
+  const handleStartQuiz = () => navigation.navigate('QuizScreen', { deckId: deck.id });
+  const handleDelete = () => {
+    dispatch(deleteDeck(deck.id));
+    navigation.goBack();
+  }
 
   return (
     <View style={styles.container}>
@@ -34,7 +42,11 @@ const DeckScreen = ({ route, navigation }: RootStackScreenProps<'DeckScreen'>) =
           Start Quiz
         </Button>
         <View style={styles.marginTop}>
-          <DefaultButton title="Delete Deck" color={Theme.colors.notification} onPress={() => {}} />
+          <DefaultButton
+            title="Delete Deck"
+            color={Theme.colors.notification}
+            onPress={handleDelete}
+          />
         </View>
       </View>
     </View>

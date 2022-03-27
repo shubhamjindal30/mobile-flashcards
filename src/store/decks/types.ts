@@ -25,3 +25,5 @@ export type SaveDeckAction = PayloadAction<string>;
 export type SetDeckAction = PayloadAction<Deck>;
 export type SaveQuestionAction = PayloadAction<SaveQuestionPayload>;
 export type SetQuestionAction = PayloadAction<SaveQuestionPayload>;
+export type DeleteDeckAction = PayloadAction<string>;
+export type DeleteDeckFromStoreAction = PayloadAction<string>;
