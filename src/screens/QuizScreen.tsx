@@ -5,13 +5,7 @@ import { Title } from 'react-native-paper';
 import { RootStackScreenProps } from '../types';
 import { Theme } from '../constants';
 import { useSelector } from '../store/hooks';
-import { Button } from '../components';
-
-const ShowMessage: React.FC = ({ children }) => (
-  <View style={styles.container}>
-    <Title style={styles.topHeading}>{children}</Title>
-  </View>
-);
+import { Button, ShowMessage } from '../components';
 
 const QuizScreen = ({ route, navigation }: RootStackScreenProps<'QuizScreen'>) => {
   const deckId = route?.params?.deckId || null;
