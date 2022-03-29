@@ -44,6 +44,10 @@ export const deckSlice = createSlice({
     deleteDeckFromStore: (state, action: DeleteDeckFromStoreAction) => {
       const deck: Deck | undefined = state.decks && state.decks[action.payload];
       if (deck) delete state.decks[deck.id];
+    },
+    deleteAllDecks: () => {},
+    deleteAllDecksFromStore: (state) => {
+      state.decks = {};
     }
   }
 });
@@ -56,7 +60,9 @@ export const {
   saveQuestion,
   setQuestion,
   deleteDeck,
-  deleteDeckFromStore
+  deleteDeckFromStore,
+  deleteAllDecks,
+  deleteAllDecksFromStore
 } = deckSlice.actions;
 
 export default deckSlice.reducer;

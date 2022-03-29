@@ -10,13 +10,16 @@ import {
   saveQuestion,
   setDeck,
   setDecks,
-  setQuestion
+  setQuestion,
+  deleteAllDecks,
+  deleteAllDecksFromStore
 } from './slice';
 import {
   deleteDeckFromStorage,
   getDecksFromStorage,
   saveDeckInStorage,
-  saveQuestionInStorage
+  saveQuestionInStorage,
+  deleteAllDecksFromStorage
 } from './services';
 
 function* handleGetDecks() {
@@ -66,11 +69,24 @@ function* handleDeleteDeck(action: DeleteDeckAction) {
   }
 }
 
+function* handleDeleteAllDecks() {
+  try {
+    const response: boolean = yield call(deleteAllDecksFromStorage);
+    if (response) {
+      yield put(deleteAllDecksFromStore());
+    }
+  } catch (error) {
+    console.log(`Error in handleDeleteAllDecks: ${error}`);
+    Alert.alert('Error', 'There was an error in deleting deck!');
+  }
+}
+
 export function* watchDeckRequests() {
   yield all([
     takeLatest(getDecks.type, handleGetDecks),
     takeLatest(saveDeck.type, handleSaveDeck),
     takeLatest(saveQuestion.type, handleSaveQuestion),
-    takeLatest(deleteDeck.type, handleDeleteDeck)
+    takeLatest(deleteDeck.type, handleDeleteDeck),
+    takeLatest(deleteAllDecks.type, handleDeleteAllDecks)
   ]);
 }

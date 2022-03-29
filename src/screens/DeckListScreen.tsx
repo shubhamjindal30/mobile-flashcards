@@ -3,19 +3,26 @@ import { ScrollView, StyleSheet, Button as DefaultButton } from 'react-native';
 import { Paragraph, Title } from 'react-native-paper';
 
 import { RootStackScreenProps } from '../types';
-import { useSelector } from '../store/hooks';
+import { useDispatch, useSelector } from '../store/hooks';
+import { deleteAllDecks } from '../store/decks/slice';
 import { ClickableCard } from '../components';
 
 const DeckListScreen = ({ navigation }: RootStackScreenProps<'DeckListScreen'>) => {
+  const dispatch = useDispatch();
   const decks = useSelector((state) => state.deck.decks);
 
   const handleAdd = () => navigation.navigate('NewDeckScreen');
+  const handleClear = () => dispatch(deleteAllDecks());
 
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => <DefaultButton title="Add" onPress={handleAdd} />
     });
-  }, [handleAdd]);
+
+    navigation.setOptions({
+      headerLeft: () => <DefaultButton title="Clear Storage" onPress={handleClear} />
+    });
+  }, [handleAdd, handleClear]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

@@ -64,4 +64,20 @@ const deleteDeckFromStorage = async (deckId: string) => {
   }
 };
 
-export { getDecksFromStorage, saveDeckInStorage, saveQuestionInStorage, deleteDeckFromStorage };
+const deleteAllDecksFromStorage = async () => {
+  try {
+    await AsyncStorage.removeItem('decks');
+    return true;
+  } catch (error) {
+    console.log(`Error in deleteAllDecksFromStorage`);
+    return false;
+  }
+};
+
+export {
+  getDecksFromStorage,
+  saveDeckInStorage,
+  saveQuestionInStorage,
+  deleteDeckFromStorage,
+  deleteAllDecksFromStorage
+};
