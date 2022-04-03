@@ -6,6 +6,7 @@ import { RootStackScreenProps } from '../types';
 import { Theme } from '../constants';
 import { useSelector } from '../store/hooks';
 import { Button, ShowMessage } from '../components';
+import { clearAllLocalNotifications, setDailyNotificationForQuiz } from '../utils/notifications';
 
 const QuizScreen = ({ route, navigation }: RootStackScreenProps<'QuizScreen'>) => {
   const deckId = route?.params?.deckId || null;
@@ -62,12 +63,16 @@ const QuizScreen = ({ route, navigation }: RootStackScreenProps<'QuizScreen'>) =
 
   const handleAnswer = () => setIsShowAnswer(!isShowAnswer);
 
-  const handleCorrect = () => {
+  const handleCorrect = async () => {
     setCorrectAnswers(correctAnswers + 1);
-    setCurrentQuestion(currentQuestion + 1);
+    await handleSubmit();
   };
 
-  const handleIncorrect = () => setCurrentQuestion(currentQuestion + 1);
+  const handleSubmit = async () => {
+    setCurrentQuestion(currentQuestion + 1);
+    await clearAllLocalNotifications();
+    await setDailyNotificationForQuiz();
+  };
 
   return (
     <View style={styles.container}>
@@ -94,7 +99,7 @@ const QuizScreen = ({ route, navigation }: RootStackScreenProps<'QuizScreen'>) =
           style={styles.marginTop}
           mode="contained"
           color={Theme.colors.error}
-          onPress={handleIncorrect}
+          onPress={handleSubmit}
         >
           Incorrect
         </Button>

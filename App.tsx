@@ -10,6 +10,7 @@ import * as Notifications from 'expo-notifications';
 import { Theme } from './src/constants';
 import Navigation from './src/navigation';
 import store from './src/store';
+import { setDailyNotificationForQuiz } from './src/utils/notifications';
 
 const App = () => {
   Notifications.setNotificationHandler({
@@ -35,6 +36,8 @@ const App = () => {
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
       console.log(response);
     });
+
+    setDailyNotificationForQuiz();
 
     return () => {
       Notifications.removeNotificationSubscription(notificationListener.current);
