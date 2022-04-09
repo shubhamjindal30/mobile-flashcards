@@ -4,7 +4,7 @@
  *
  */
 import { useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { createNavigationContainerRef, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import {
@@ -19,6 +19,14 @@ import { RootStackParamList } from '../types';
 import { useDispatch } from '../store/hooks';
 import { getDecks } from '../store/decks/slice';
 
+const navigationRef = createNavigationContainerRef<RootStackParamList>();
+
+export const navigate = (name: keyof RootStackParamList, params: any) => {
+  if (navigationRef.isReady()) {
+    navigationRef.navigate(name, params);
+  }
+};
+
 const Navigation = () => {
   const dispatch = useDispatch();
 
@@ -27,7 +35,7 @@ const Navigation = () => {
   }, [dispatch]);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <RootNavigator />
     </NavigationContainer>
   );

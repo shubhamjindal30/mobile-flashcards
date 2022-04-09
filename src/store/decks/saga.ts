@@ -21,6 +21,7 @@ import {
   saveQuestionInStorage,
   deleteAllDecksFromStorage
 } from './services';
+import { navigate } from '../../navigation';
 
 function* handleGetDecks() {
   try {
@@ -37,6 +38,7 @@ function* handleSaveDeck(action: SaveDeckAction) {
   try {
     const response: { data: Deck | null } = yield call(saveDeckInStorage, action.payload);
     if (response.data) {
+      navigate('DeckScreen', { deckId: response.data.id });
       yield put(setDeck(response.data));
     }
   } catch (error) {
